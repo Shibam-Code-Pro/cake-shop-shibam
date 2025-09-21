@@ -754,16 +754,24 @@ window.addEventListener("load", () => {
           y: gsap.getProperty(box.querySelector(".pContainer"), "y"),
           scale: randScale(),
         });
+        // Simulate physics2D with standard GSAP animations
+        const velocity = gsap.utils.random(-23, 23);
+        const angle = gsap.utils.random(-180, 180);
+        const gravity = gsap.utils.random(-6, 50);
+        const duration = gsap.utils.random(0.61, 6);
+        
+        // Convert angle to radians and calculate movement
+        const angleRad = (angle * Math.PI) / 180;
+        const moveX = Math.cos(angleRad) * velocity * 10;
+        const moveY = Math.sin(angleRad) * velocity * 10 + gravity * 10;
+        
         gsap.timeline().to(a, {
-          duration: gsap.utils.random(0.61, 6),
-          physics2D: {
-            velocity: gsap.utils.random(-23, 23),
-            angle: gsap.utils.random(-180, 180),
-            gravity: gsap.utils.random(-6, 50),
-          },
+          duration: duration,
+          x: `+=${moveX}`,
+          y: `+=${moveY}`,
           scale: 0,
           rotation: gsap.utils.random(-123, 360),
-          ease: "power1",
+          ease: "power2.out",
           onStart: flicker,
           onStartParams: [a],
           onRepeat: (b) => gsap.set(b, { scale: randScale() }),
@@ -802,17 +810,18 @@ window.addEventListener("load", () => {
           },
           "-=0"
         )
-        .from(
+        .fromTo(
           box.querySelector(".treeBottomMask"),
-          { duration: 2, drawSVG: "0% 0%", stroke: "#FFF", ease: "linear" },
+          { strokeDasharray: "0 1000", stroke: "#FFF" },
+          { duration: 2, strokeDasharray: "1000 0", ease: "linear" },
           "-=2"
         );
 
-      c.from(
+      c.fromTo(
         [box.querySelector(".treePathMask"), box.querySelector(".treePotMask")],
+        { strokeDasharray: "0 1000", stroke: "#FFF" },
         {
-          drawSVG: "0% 0%",
-          stroke: "#FFF",
+          strokeDasharray: "1000 0",
           stagger: { each: 6 },
           duration: gsap.utils.wrap([6, 1, 2]),
           ease: "linear",
