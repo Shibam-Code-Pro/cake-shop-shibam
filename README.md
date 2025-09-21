@@ -50,7 +50,7 @@ Chocolate Edition' with particle effects and sparkle trails</em></p>
 
 ## ✨ Live Demo
 
-[View Sweet Dreams Bakery Website](https://cake-shop-shibam.vercel.app)
+🌐 [View Sweet Dreams Bakery Website](https://cake-shop-shibam.vercel.app)
 
 ## 🚀 Features
 
